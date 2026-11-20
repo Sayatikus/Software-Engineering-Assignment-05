@@ -14,6 +14,7 @@ import {
 import { rooms } from '@/lib/data';
 import { checkAvailability } from '@/lib/checkAvailability';
 import { isResultCurrent } from '@/lib/resultFreshness';
+import { ExplanationPanel } from './components/ExplanationPanel';
 import type { SelectionSnapshot } from '@/lib/resultFreshness';
 import { minutesToTime, timeToMinutes } from '@/lib/time';
 import type { CheckResult } from '@/lib/types';
@@ -34,6 +35,7 @@ function App() {
   const [endTime, setEndTime] = useState('12:00');
   const [nowTime, setNowTime] = useState('10:00');
   const [resultView, setResultView] = useState<ResultView | null>(null);
+  const [checkNumber, setCheckNumber] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
   const room = useMemo(
@@ -64,6 +66,7 @@ function App() {
       return;
     }
     setError(null);
+    setCheckNumber(n => n + 1);
     const result = checkAvailability({ room, start, end, now: nowMinutes });
     setResultView({
       start,
@@ -252,7 +255,7 @@ function App() {
               )}
 
               {showCheckedResult && resultView && (
-                <ResultPanel view={resultView} roomName={room.name} />
+                <ResultPanel key={checkNumber} view={resultView} roomName={room.name} />
               )}
             </div>
           </section>
@@ -389,6 +392,14 @@ function ResultPanel({ view, roomName }: ResultPanelProps) {
               </ul>
             </div>
           )}
+        </div>
+        <div className="px-3 pb-3">
+          <ExplanationPanel
+            roomLabel={roomName}
+            start={start}
+            end={end}
+            result={result}
+          />
         </div>
       </div>
     </div>
