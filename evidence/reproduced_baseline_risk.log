@@ -1,0 +1,34 @@
+TAP version 13
+# Subtest: R02 current time must be a valid integer minute
+not ok 1 - R02 current time must be a valid integer minute
+  ---
+  duration_ms: 1.807401
+  type: 'test'
+  location: '/mnt/data/A5_Zhaulybek_Sayat/github_upload/evidence/baseline_invalid_now_repro.test.mjs:7:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Invalid current time must not produce Available
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///mnt/data/A5_Zhaulybek_Sayat/github_upload/evidence/baseline_invalid_now_repro.test.mjs:9:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 224.875283

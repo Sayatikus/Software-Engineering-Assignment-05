@@ -1,0 +1,113 @@
+--- baseline/src/App.tsx	2026-10-30 11:30:16.000000000 +0000
++++ final/src/App.tsx	2026-11-20 09:14:49.168356831 +0000
+@@ -13,10 +13,11 @@
+ } from 'lucide-react';
+ import { rooms } from '@/lib/data';
+ import { checkAvailability } from '@/lib/checkAvailability';
++import { isResultCurrent } from '@/lib/resultFreshness';
++import type { SelectionSnapshot } from '@/lib/resultFreshness';
+ import { minutesToTime, timeToMinutes } from '@/lib/time';
+ import type { CheckResult } from '@/lib/types';
+ 
+-const DEFAULT_NOW = 600; // 10:00
+ const MAX_DURATION = 120;
+ 
+ interface ResultView {
+@@ -24,6 +25,7 @@
+   end: number;
+   duration: number;
+   result: CheckResult;
++  selection: SelectionSnapshot;
+ }
+ 
+ function App() {
+@@ -40,8 +42,7 @@
+   );
+ 
+   const nowMinutes = useMemo(() => {
+-    const m = timeToMinutes(nowTime);
+-    return m === null ? DEFAULT_NOW : m;
++    return timeToMinutes(nowTime);
+   }, [nowTime]);
+ 
+   // Live duration preview (null when inputs are invalid/unordered)
+@@ -57,9 +58,9 @@
+     const start = timeToMinutes(startTime);
+     const end = timeToMinutes(endTime);
+ 
+-    if (start === null || end === null) {
++    if (start === null || end === null || nowMinutes === null) {
+       setResultView(null);
+-      setError('Please enter valid times in 24-hour HH:MM format (00:00–23:59).');
++      setError('Please enter valid start, end and current times in HH:MM format (00:00–23:59).');
+       return;
+     }
+     setError(null);
+@@ -69,6 +70,7 @@
+       end,
+       duration: end - start,
+       result,
++      selection: { roomId, startTime, endTime, nowTime },
+     });
+   }
+ 
+@@ -81,6 +83,10 @@
+   }
+ 
+   const durationOverLimit = liveDuration !== null && liveDuration > MAX_DURATION;
++  const showCheckedResult = resultView !== null && isResultCurrent(
++    resultView.selection,
++    { roomId, startTime, endTime, nowTime }
++  );
+ 
+   return (
+     <div className="min-h-screen bg-slate-50 text-slate-900">
+@@ -171,7 +177,7 @@
+                   <input
+                     type="time"
+                     value={startTime}
+-                    onChange={(e) => setStartTime(e.target.value)}
++                    onChange={(e) => { setStartTime(e.target.value); setResultView(null); setError(null); }}
+                     className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-200"
+                   />
+                 </div>
+@@ -182,7 +188,7 @@
+                   <input
+                     type="time"
+                     value={endTime}
+-                    onChange={(e) => setEndTime(e.target.value)}
++                    onChange={(e) => { setEndTime(e.target.value); setResultView(null); setError(null); }}
+                     className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-200"
+                   />
+                 </div>
+@@ -215,7 +221,7 @@
+                 <input
+                   type="time"
+                   value={nowTime}
+-                  onChange={(e) => setNowTime(e.target.value)}
++                  onChange={(e) => { setNowTime(e.target.value); setResultView(null); setError(null); }}
+                   className="w-full rounded-lg border border-amber-300 bg-white px-3 py-2 text-sm focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-200"
+                 />
+                 <p className="mt-1 text-xs text-amber-700">
+@@ -245,7 +251,7 @@
+                 </div>
+               )}
+ 
+-              {resultView && (
++              {showCheckedResult && resultView && (
+                 <ResultPanel view={resultView} roomName={room.name} />
+               )}
+             </div>
+--- baseline/src/lib/checkAvailability.ts	2026-11-06 09:06:10.000000000 +0000
++++ final/src/lib/checkAvailability.ts	2026-11-20 09:14:49.167734020 +0000
+@@ -11,6 +11,10 @@
+     reasons.push('Start and end times must be in whole minutes.');
+   }
+ 
++  if (!Number.isInteger(now) || now < 0 || now >= MINUTES_PER_DAY) {
++    reasons.push('Current time must be a whole minute between 00:00 and 23:59.');
++  }
++
+   if (!(0 <= start && start < end && end <= MINUTES_PER_DAY)) {
+     reasons.push(
+       `Times must satisfy 0 <= start < end <= ${MINUTES_PER_DAY} (a full day is 1440 minutes).`

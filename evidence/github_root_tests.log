@@ -1,0 +1,194 @@
+
+> vite-react-typescript-starter@0.0.0 test
+> node --no-warnings --experimental-strip-types --test booking.test.mjs assignment05.test.mjs
+
+TAP version 13
+# Subtest: A5-01: rejects NaN clock
+ok 1 - A5-01: rejects NaN clock
+  ---
+  duration_ms: 1.807923
+  type: 'test'
+  ...
+# Subtest: A5-02: rejects negative clock
+ok 2 - A5-02: rejects negative clock
+  ---
+  duration_ms: 0.233125
+  type: 'test'
+  ...
+# Subtest: A5-03: rejects fractional clock
+ok 3 - A5-03: rejects fractional clock
+  ---
+  duration_ms: 0.334684
+  type: 'test'
+  ...
+# Subtest: A5-04: rejects clock at or beyond day end
+ok 4 - A5-04: rejects clock at or beyond day end
+  ---
+  duration_ms: 0.275808
+  type: 'test'
+  ...
+# Subtest: A5-05: accepts valid 10:00 clock and touching boundary
+ok 5 - A5-05: accepts valid 10:00 clock and touching boundary
+  ---
+  duration_ms: 0.256439
+  type: 'test'
+  ...
+# Subtest: A5-06: invalid current-time text does not silently become 10:00
+ok 6 - A5-06: invalid current-time text does not silently become 10:00
+  ---
+  duration_ms: 0.464015
+  type: 'test'
+  ...
+# Subtest: A5-07: checked status hides after start-time change
+ok 7 - A5-07: checked status hides after start-time change
+  ---
+  duration_ms: 0.255257
+  type: 'test'
+  ...
+# Subtest: A5-08: checked status hides after end-time change
+ok 8 - A5-08: checked status hides after end-time change
+  ---
+  duration_ms: 0.205233
+  type: 'test'
+  ...
+# Subtest: A5-09: checked status hides after room change
+ok 9 - A5-09: checked status hides after room change
+  ---
+  duration_ms: 0.557765
+  type: 'test'
+  ...
+# Subtest: A5-10: checked status hides after current-time change
+ok 10 - A5-10: checked status hides after current-time change
+  ---
+  duration_ms: 0.704862
+  type: 'test'
+  ...
+# Subtest: A5-11: unchanged selection preserves checked status
+ok 11 - A5-11: unchanged selection preserves checked status
+  ---
+  duration_ms: 0.307986
+  type: 'test'
+  ...
+# Subtest: T01 AC4: Touching after existing booking
+ok 12 - T01 AC4: Touching after existing booking
+  ---
+  duration_ms: 2.109598
+  type: 'test'
+  ...
+# Subtest: T02 AC1: Starts at current time
+ok 13 - T02 AC1: Starts at current time
+  ---
+  duration_ms: 0.313333
+  type: 'test'
+  ...
+# Subtest: T03 AC1: Zero duration
+ok 14 - T03 AC1: Zero duration
+  ---
+  duration_ms: 0.253766
+  type: 'test'
+  ...
+# Subtest: T04 AC1: Reversed time interval
+ok 15 - T04 AC1: Reversed time interval
+  ---
+  duration_ms: 0.257531
+  type: 'test'
+  ...
+# Subtest: T05 AC1: End exceeds the day
+ok 16 - T05 AC1: End exceeds the day
+  ---
+  duration_ms: 0.596102
+  type: 'test'
+  ...
+# Subtest: T06 AC2: Exactly 120 minutes
+ok 17 - T06 AC2: Exactly 120 minutes
+  ---
+  duration_ms: 0.259824
+  type: 'test'
+  ...
+# Subtest: T07 AC2: 121 minutes
+ok 18 - T07 AC2: 121 minutes
+  ---
+  duration_ms: 0.409195
+  type: 'test'
+  ...
+# Subtest: T08 AC4: Touching before existing booking
+ok 19 - T08 AC4: Touching before existing booking
+  ---
+  duration_ms: 0.241307
+  type: 'test'
+  ...
+# Subtest: T09 AC4: Partial overlap
+ok 20 - T09 AC4: Partial overlap
+  ---
+  duration_ms: 0.815515
+  type: 'test'
+  ...
+# Subtest: T10 AC4: Candidate contains existing booking
+ok 21 - T10 AC4: Candidate contains existing booking
+  ---
+  duration_ms: 0.698212
+  type: 'test'
+  ...
+# Subtest: T11 AC4: Candidate inside existing booking
+ok 22 - T11 AC4: Candidate inside existing booking
+  ---
+  duration_ms: 0.329968
+  type: 'test'
+  ...
+# Subtest: T12 AC4: Identical interval
+ok 23 - T12 AC4: Identical interval
+  ---
+  duration_ms: 0.172495
+  type: 'test'
+  ...
+# Subtest: T13 AC3: Blocked room
+ok 24 - T13 AC3: Blocked room
+  ---
+  duration_ms: 0.133127
+  type: 'test'
+  ...
+# Subtest: T14 AC4: No bookings
+ok 25 - T14 AC4: No bookings
+  ---
+  duration_ms: 0.105405
+  type: 'test'
+  ...
+# Subtest: T15 AC5: request does not mutate bookings or any input data
+ok 26 - T15 AC5: request does not mutate bookings or any input data
+  ---
+  duration_ms: 1.022452
+  type: 'test'
+  ...
+# Subtest: T16 AC4: Overlap with second of several bookings
+ok 27 - T16 AC4: Overlap with second of several bookings
+  ---
+  duration_ms: 0.14195
+  type: 'test'
+  ...
+# Subtest: T17 AC1: Fractional minute must be rejected
+ok 28 - T17 AC1: Fractional minute must be rejected
+  ---
+  duration_ms: 0.13546
+  type: 'test'
+  ...
+# Subtest: T18 AC1: Day end exactly at 1440 allowed
+ok 29 - T18 AC1: Day end exactly at 1440 allowed
+  ---
+  duration_ms: 0.121209
+  type: 'test'
+  ...
+# Subtest: T19 AC5: bookings keep original order after a check
+ok 30 - T19 AC5: bookings keep original order after a check
+  ---
+  duration_ms: 0.292593
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 270.714509

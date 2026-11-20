@@ -1,0 +1,4 @@
+baseline status visible before time edit: True
+baseline status STILL visible after time edit: True
+Expected: previous result should not be shown after booking times change
+Observed: stale Available label remains visible
