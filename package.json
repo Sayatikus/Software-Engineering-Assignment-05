@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
-    "test": "node --no-warnings --experimental-strip-types --test booking.test.mjs assignment05.test.mjs",
+    "test": "node --no-warnings --experimental-strip-types --test booking.test.mjs assignment05.test.mjs practice11.test.mjs",
     "test:first": "node --no-warnings --experimental-strip-types --test booking.first.test.mjs"
   },
   "dependencies": {
